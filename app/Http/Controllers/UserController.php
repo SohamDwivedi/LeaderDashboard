@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Winner;
 use Illuminate\Http\Request;
 use App\Jobs\GenerateQrCodeJob;
 use Illuminate\Support\Facades\Log;
@@ -35,6 +36,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::findOrFail($id);
+        Winner::where('user_id', $id)->delete();
         $user->delete();
         return response()->json(['message' => 'User deleted successfully']);
     }
